@@ -1,21 +1,18 @@
 
 // FUNCION CONSTRUCTORA PARA EL JUEGO
-function StarshipGame(){
+function StarshipGame() {
+    this.playerBoard = new BoardGame('gameboard-player')
 
-    this.createCellInteraction = function (){ // Funcion de seleccion de la casilla
-        document.querySelectorAll('td').forEach(function(td) {
-            td.addEventListener('click', function(e){
-                console.log(e.target)
-            })
-        })
+    this.startGame = function() {
+        this.playerBoard.startBoard()
     }
-
-
 }
 
 var game = new StarshipGame()
 
-game.createCellInteraction()
+game.startGame()
+
+
 
 
 
