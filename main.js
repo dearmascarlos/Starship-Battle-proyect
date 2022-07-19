@@ -1,4 +1,33 @@
 
+// FUNCION CONSTRUCTORA PARA EL JUEGO
+function StarshipGame(){
+
+    this.createCellInteraction = function (){ // Funcion de seleccion de la casilla
+        document.querySelectorAll('td').forEach(function(td) {
+            td.addEventListener('click', function(e){
+                console.log(e.target)
+            })
+        })
+    }
+
+
+}
+
+var game = new StarshipGame()
+
+game.createCellInteraction()
+
+
+
+
+
+
+
+
+
+
+
+
 //FUNCION  constructora board con tablero de jugador y tablero de computer (IA)
 
 //DEFINIR tamaño y numero de las naves

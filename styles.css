@@ -20,7 +20,6 @@ table {
 }
 
 #gameboard-ia {
-    background-color: blue;
     position: absolute;
     margin-top: 300px;
     margin-left: 650px;
@@ -96,19 +95,19 @@ table {
     margin-left: 200px;
 }
 
-#hit {
+.hit {
     background-color: orange;
 }
 
-#destroyed {
+.destroyed {
     background-color: red;
 }
 
-#vacuum {
+.vacuum {
     background-color: grey;
 }
 
-#starship{
+.starship{
     background-color: blueviolet;
 }
 
