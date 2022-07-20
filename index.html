@@ -1,171 +1,170 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/styles.css">
-    <script src="src/board.js" defer></script>
-    <script src="src/main.js" defer></script>
-    <title>Starship Battle</title>
-</head>
-<body>
-    <div id="canvas">
-    <div id="game-tittle">STARSHIP BATTLE</div>
-    <div id="starship-player"></div>
-    <div id="starship-ia"></div>    
-        <table id="gameboard-player">
-            <tr class="rowY">
-                <th></th>
-                <th>A</th>
-                <th>B</th>
-                <th>C</th>
-                <th>D</th>
-                <th>E</th>
-                <th>F</th>
-                <th>G</th>
-                <th>H</th>
-                <th>I</th>
-                <th>J</th>
-            </tr>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/styles.css">
+        <script src="src/board.js" defer></script>
+        <script src="src/main.js" defer></script>
+        <title>Starship Battle</title>
+    </head>
+    <body>
+        <div id="canvas">
+            <div id="game-tittle">STARSHIP BATTLE</div>
+            <div id="starship-player"></div>
+            <div id="starship-ia"></div>    
+            <table id="gameboard-player">
+                <tr class="rowY">
+                    <th></th>
+                    <th>A</th>
+                    <th>B</th>
+                    <th>C</th>
+                    <th>D</th>
+                    <th>E</th>
+                    <th>F</th>
+                    <th>G</th>
+                    <th>H</th>
+                    <th>I</th>
+                    <th>J</th>
+                </tr>
 
-            <tr class="row0">
-                <th>1</th>
-                <td class="col0"></td>
-                <td class="col1"></td>
-                <td class="col2"></td>
-                <td class="col3"></td>
-                <td class="col4"></td>
-                <td class="col5"></td>
-                <td class="col6"></td>
-                <td class="col7"></td>
-                <td class="col8"></td>
-                <td class="col9"></td>
-            </tr>
-            <tr class="row1">
-                <th>2</th>
-                <td class="col0"></td>
-                <td class="col1"></td>
-                <td class="col2"></td>
-                <td class="col3"></td>
-                <td class="col4"></td>
-                <td class="col5"></td>
-                <td class="col6"></td>
-                <td class="col7"></td>
-                <td class="col8"></td>
-                <td class="col9"></td>
-            </tr>
-            <tr class="row2">
-                <th>3</th>
-                <td class="col0"></td>
-                <td class="col1"></td>
-                <td class="col2"></td>
-                <td class="col3"></td>
-                <td class="col4"></td>
-                <td class="col5"></td>
-                <td class="col6"></td>
-                <td class="col7"></td>
-                <td class="col8"></td>
-                <td class="col9"></td>
-            </tr>
-            <tr class="row3">
-                <th>4</th>
-                <td class="col0"></td>
-                <td class="col1"></td>
-                <td class="col2"></td>
-                <td class="col3"></td>
-                <td class="col4"></td>
-                <td class="col5"></td>
-                <td class="col6"></td>
-                <td class="col7"></td>
-                <td class="col8"></td>
-                <td class="col9"></td>
-            </tr>
-            <tr class="row4">
-                <th>5</th>
-                <td class="col0"></td>
-                <td class="col1"></td>
-                <td class="col2"></td>
-                <td class="col3"></td>
-                <td class="col4"></td>
-                <td class="col5"></td>
-                <td class="col6"></td>
-                <td class="col7"></td>
-                <td class="col8"></td>
-                <td class="col9"></td>
-            </tr>
-            <tr class="row5">
-                <th>6</th>
-                <td class="col0"></td>
-                <td class="col1"></td>
-                <td class="col2"></td>
-                <td class="col3"></td>
-                <td class="col4"></td>
-                <td class="col5"></td>
-                <td class="col6"></td>
-                <td class="col7"></td>
-                <td class="col8"></td>
-                <td class="col9"></td>
-            </tr>
-            <tr class="row6">
-                <th>7</th>
-                <td class="col0"></td>
-                <td class="col1"></td>
-                <td class="col2"></td>
-                <td class="col3"></td>
-                <td class="col4"></td>
-                <td class="col5"></td>
-                <td class="col6"></td>
-                <td class="col7"></td>
-                <td class="col8"></td>
-                <td class="col9"></td>
-            </tr>
-            <tr class="row7">
-                <th>8</th>
-                <td class="col0"></td>
-                <td class="col1"></td>
-                <td class="col2"></td>
-                <td class="col3"></td>
-                <td class="col4"></td>
-                <td class="col5"></td>
-                <td class="col6"></td>
-                <td class="col7"></td>
-                <td class="col8"></td>
-                <td class="col9"></td>
-            </tr>
-            <tr class="row8">
-                <th>9</th>
-                <td class="col0"></td>
-                <td class="col1"></td>
-                <td class="col2"></td>
-                <td class="col3"></td>
-                <td class="col4"></td>
-                <td class="col5"></td>
-                <td class="col6"></td>
-                <td class="col7"></td>
-                <td class="col8"></td>
-                <td class="col9"></td>
-            </tr>
-            <tr class="row9">
-                <th>10</th>
-                <td class="col0"></td>
-                <td class="col1"></td>
-                <td class="col2"></td>
-                <td class="col3"></td>
-                <td class="col4"></td>
-                <td class="col5"></td>
-                <td class="col6"></td>
-                <td class="col7"></td>
-                <td class="col8"></td>
-                <td class="col9"></td>
-            </tr>
-            
-        </table>
-        <div id="fleet-player"></div>
-        <div id="fleet-ia"></div>
-        <div id="dialogbox-player"></div>
-        <div id="dialogbox-ia"></div>
-    </div>
-</body>
+                <tr class="row0">
+                    <th>1</th>
+                    <td class="col0"></td>
+                    <td class="col1"></td>
+                    <td class="col2"></td>
+                    <td class="col3"></td>
+                    <td class="col4"></td>
+                    <td class="col5"></td>
+                    <td class="col6"></td>
+                    <td class="col7"></td>
+                    <td class="col8"></td>
+                    <td class="col9"></td>
+                </tr>
+                <tr class="row1">
+                    <th>2</th>
+                    <td class="col0"></td>
+                    <td class="col1"></td>
+                    <td class="col2"></td>
+                    <td class="col3"></td>
+                    <td class="col4"></td>
+                    <td class="col5"></td>
+                    <td class="col6"></td>
+                    <td class="col7"></td>
+                    <td class="col8"></td>
+                    <td class="col9"></td>
+                </tr>
+                <tr class="row2">
+                    <th>3</th>
+                    <td class="col0"></td>
+                    <td class="col1"></td>
+                    <td class="col2"></td>
+                    <td class="col3"></td>
+                    <td class="col4"></td>
+                    <td class="col5"></td>
+                    <td class="col6"></td>
+                    <td class="col7"></td>
+                    <td class="col8"></td>
+                    <td class="col9"></td>
+                </tr>
+                <tr class="row3">
+                    <th>4</th>
+                    <td class="col0"></td>
+                    <td class="col1"></td>
+                    <td class="col2"></td>
+                    <td class="col3"></td>
+                    <td class="col4"></td>
+                    <td class="col5"></td>
+                    <td class="col6"></td>
+                    <td class="col7"></td>
+                    <td class="col8"></td>
+                    <td class="col9"></td>
+                </tr>
+                <tr class="row4">
+                    <th>5</th>
+                    <td class="col0"></td>
+                    <td class="col1"></td>
+                    <td class="col2"></td>
+                    <td class="col3"></td>
+                    <td class="col4"></td>
+                    <td class="col5"></td>
+                    <td class="col6"></td>
+                    <td class="col7"></td>
+                    <td class="col8"></td>
+                    <td class="col9"></td>
+                </tr>
+                <tr class="row5">
+                    <th>6</th>
+                    <td class="col0"></td>
+                    <td class="col1"></td>
+                    <td class="col2"></td>
+                    <td class="col3"></td>
+                    <td class="col4"></td>
+                    <td class="col5"></td>
+                    <td class="col6"></td>
+                    <td class="col7"></td>
+                    <td class="col8"></td>
+                    <td class="col9"></td>
+                </tr>
+                <tr class="row6">
+                    <th>7</th>
+                    <td class="col0"></td>
+                    <td class="col1"></td>
+                    <td class="col2"></td>
+                    <td class="col3"></td>
+                    <td class="col4"></td>
+                    <td class="col5"></td>
+                    <td class="col6"></td>
+                    <td class="col7"></td>
+                    <td class="col8"></td>
+                    <td class="col9"></td>
+                </tr>
+                <tr class="row7">
+                    <th>8</th>
+                    <td class="col0"></td>
+                    <td class="col1"></td>
+                    <td class="col2"></td>
+                    <td class="col3"></td>
+                    <td class="col4"></td>
+                    <td class="col5"></td>
+                    <td class="col6"></td>
+                    <td class="col7"></td>
+                    <td class="col8"></td>
+                    <td class="col9"></td>
+                </tr>
+                <tr class="row8">
+                    <th>9</th>
+                    <td class="col0"></td>
+                    <td class="col1"></td>
+                    <td class="col2"></td>
+                    <td class="col3"></td>
+                    <td class="col4"></td>
+                    <td class="col5"></td>
+                    <td class="col6"></td>
+                    <td class="col7"></td>
+                    <td class="col8"></td>
+                    <td class="col9"></td>
+                </tr>
+                <tr class="row9">
+                    <th>10</th>
+                    <td class="col0"></td>
+                    <td class="col1"></td>
+                    <td class="col2"></td>
+                    <td class="col3"></td>
+                    <td class="col4"></td>
+                    <td class="col5"></td>
+                    <td class="col6"></td>
+                    <td class="col7"></td>
+                    <td class="col8"></td>
+                    <td class="col9"></td>
+                </tr>
+            </table>
+            <div id="fleet-player"></div>
+            <div id="fleet-ia"></div>
+            <div id="dialogbox-player"></div>
+            <div id="dialogbox-ia"></div>
+        </div>
+    </body>
 </html>
 

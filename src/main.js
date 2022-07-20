@@ -25,13 +25,10 @@ game.startGame()
 
 
 
-//FUNCION  constructora board con tablero de jugador y tablero de computer (IA)
 
-//DEFINIR tamaño y numero de las naves
+
 
 //FUNCION y BOTON de inicio del juego
-
-//FUNCION posicionamiento de las naves (aleatorio)
 
 //FUNCION  PLAYER  que marque su 1ª elección de casilla al comenzar a jugar
 
