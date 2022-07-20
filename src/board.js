@@ -3,6 +3,7 @@
 function BoardGame(id) {
     this.id = id
     this.canvas = document.getElementById(id)
+    self = this
     this.ship = []
     
 
@@ -14,51 +15,51 @@ function BoardGame(id) {
                 var col = parseInt(e.target.getAttribute('class').charAt(3))
                 var row = parseInt(e.target.parentNode.getAttribute('class').charAt(3))
                     console.log(row, col) 
-                td.classList.add('vacuum') 
+                td.classList.add('vacuum')
             })
         })
-        generateShip()                  
+        generateShip(3)                  
     }
 
     this.startBoard = function() { 
         this.createCellInteraction() 
     }
+
 } 
 
 //function generateShip()
-
-
 //DEFINIR tamaño y numero de las naves
 
-function generateShip() {
-    let celda = []
-    let numShips = 1
-    let randomRow = 0
-    let randomCol = 0
-    for(let i=0; i < numShips; i++){
-        randomRow =  Math.floor(Math.random() * 9)   //Genero núm aleatorio [0, 9]
-        randomCol =  Math.floor(Math.random() * 9)   //Genero núm aleatorio [0, 9]
-        if(randomCol < 9 && randomRow < 9) {
-            celda.push({
+function generateShip(longship) {
+
+        let randomRow =  Math.floor(Math.random() * 10)   //Genero núm aleatorio [0, 9]
+        let randomCol =  Math.floor(Math.random() * (11 - longship))   //Genero núm aleatorio [0, 9]
+        if(randomCol <= 9 && randomRow <= 9) {
+            self.ship.push({
                 row: randomRow,
                 col: randomCol
             })
-        }else{
-            randomRow =  Math.floor(Math.random() * 8)   //Genero núm aleatorio [0, 8]
-            randomCol =  Math.floor(Math.random() * 8)   //Genero núm aleatorio [0, 8]
-            celda.push({
-                row: randomRow,
-                col: randomCol
-            })
-        }
-    }
-    celda.forEach(function(td){
+        }    
+       // }else{  no estamos encontrando el sentido a esta parte
+       //    randomRow =  Math.floor(Math.random() * 8)   //Genero núm aleatorio [0, 8]
+       //    randomCol =  Math.floor(Math.random() * 8)   //Genero núm aleatorio [0, 8]
+       //     self.ship.push({
+       //         row: randomRow,
+       //         col: randomCol
+       //     })
+        
+    //}
+    self.ship.forEach(function(td){
         let element = document.querySelector('.row' + td.row + ' .col' + td.col)
+        element.classList.add('starship') 
+
+        element = document.querySelector('.row' + td.row + ' .col' + (td.col + longship -1))
         element.classList.add('starship')
-        element = document.querySelector('.row' + td.row + ' .col' + (td.col + 1))
-        element.classList.add('starship')
-    })
+    })  
+    console.log(self.ship)
 }
+
+
 
 
 
