@@ -25,7 +25,6 @@ function BoardGame(id) {
     }
 } 
 
-//function generateShip()
 
 
 //DEFINIR tamaño y numero de las naves
@@ -35,6 +34,7 @@ function generateShip() {
     let numShips = 1
     let randomRow = 0
     let randomCol = 0
+
     for(let i=0; i < numShips; i++){
         randomRow =  Math.floor(Math.random() * 9)   //Genero núm aleatorio [0, 9]
         randomCol =  Math.floor(Math.random() * 9)   //Genero núm aleatorio [0, 9]
@@ -50,14 +50,18 @@ function generateShip() {
                 row: randomRow,
                 col: randomCol
             })
+            
         }
     }
     celda.forEach(function(td){
         let element = document.querySelector('.row' + td.row + ' .col' + td.col)
         element.classList.add('starship')
-        element = document.querySelector('.row' + td.row + ' .col' + (td.col + 1))
+        element = document.querySelector('.row' + td.row + ' .col')
+        element.classList.add('starship')
+        element = document.querySelector('.row' + td.row > ' .col' + (td.col + 1))
         element.classList.add('starship')
     })
+    console.log(celda)
 }
 
 
