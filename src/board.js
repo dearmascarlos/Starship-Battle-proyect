@@ -81,6 +81,7 @@ function GenerateShip(longShip) {
     console.log(self.ship)
 }
 
+// nuevo push //
 
 
 
