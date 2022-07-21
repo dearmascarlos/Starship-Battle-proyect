@@ -22,39 +22,38 @@ function BoardGame(id) {
                    console.log(row, col)
                     td.classList.add('vacuum')
             })
-        })
+        })    
     }
 
-    this.generateShip= function(longShip) {
+    this.generateShip = function(longShip) {
         let randomRow = 0 
         let randomCol = 0
-
         for (var i = 0; i < longShip; i++) { 
-            if (i === 0){
-                randomRow =  Math.floor(Math.random() * 10 )   //Genero núm aleatorio [0, 9]
-                randomCol =  Math.floor(Math.random() * (11 - longShip))   //Genero núm aleatorio [0, 9]
-            } else {
-                randomCol += 1
-            }
+                if (i === 0) {
+                    randomRow =  Math.floor(Math.random() * 10 )   //Genero núm aleatorio [0, 9]
+                    randomCol =  Math.floor(Math.random() * (11 - longShip))   //Genero núm aleatorio [0, 9]
+                } else {
+                    randomCol += 1
+                }
+                console.log(self.fleet['ship' + longShip])
+                self.fleet['ship' + longShip].push({
+                    row: randomRow,
+                    col: randomCol
+                })       
+            } 
+            self.fleet['ship' + longShip].forEach(function(td) {
+                console.log(td)
+            let element = document.querySelector('.row' + td.row + ' .col' + td.col)
+            element.classList.add('starship') 
 
-            self.fleet['ship' + longShip].push({
-                row: randomRow,
-                col: randomCol
-            })  
-        } 
-
-        self.fleet['ship' + longShip].forEach(function(td) {
-            let element1 = document.querySelector('.row' + td.row + ' .col' + td.col)
-            element1.classList.add('starship') 
-        })
-
+         })  
     }
 
     this.startBoard = function() { 
         this.createCellInteraction() 
-        for (var i= 2; i < 6 ; i++ {
+        for(var i = 2; i < 6; i++){
             this.generateShip(i)
-        } 
+        }
     }
 } 
 
