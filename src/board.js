@@ -66,13 +66,13 @@ function BoardGame(id) {
                 self.fleet['ship' + longShip].push({
                     row: randomRow,
                     col: randomCol
-                })       
+                }) 
+          
             } 
             self.fleet['ship' + longShip].forEach(function(td) {
                 console.log(td)
             let element = document.querySelector('.row' + td.row + ' .col' + td.col)
             element.classList.add('starship') 
-
          })  
     }
 
@@ -80,26 +80,38 @@ function BoardGame(id) {
 
     this.startBoard = function() { 
         this.createCellInteraction() 
-        for(var i = 2; i < 6; i++){
+        for(var i = 2; i < 6; i++) {
             if (Math.random() > 0.5) {
                 this.generateVerticalShip(i)
             } else {
                 this.generateHorizontalShip(i)
             }
         }
+    }   
+
+//CONSEGUIR que las naves aleatorias no coincidan en las mismas casillas
+
+    this.checkFreeCell = function (row, col) {
+        for (var i = 0; i < this.fleet.length; i++) {
+            if (this.fleet[i].row === randomRow && this.fleet[i].col === randomCol) {
+                return true
+                console.log('true')
+        }   else {
+                return false
+                console.log('false')
+        }
+        }
     }
-} 
+    // realmente no sé si esto debe ir aquí o dentro del método generatechip, para hacer las posiciones aleatorias,
+    // de forma que si alguna es = ya no la haga, sino que haga otro math.random.
+    // tampoco sé por qué los console.log no están funcionando...
+}
+
 
 
 
 
     
-
-
-
-
-
-
 
 
 
