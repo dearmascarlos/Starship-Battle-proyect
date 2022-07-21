@@ -29,6 +29,7 @@
 
 td {
     text-align: center;
+    background-color: rgba(18, 137, 66, 0.399);
     color: white;
     border: 1px solid rgb(0, 255, 30);
     width: 30px;
@@ -53,18 +54,88 @@ table {
     margin-left: 280px;
     margin-top: 300px;
 }
-
-.ship1, .ship2, .ship3, .ship4 {
+.ship2ia {
     border: 1px solid rgb(58, 218, 22);
     height: 85px;
     margin-top: 10px;
+    background-image: url(img/ship2ia.png);
+    background-size: 130px;
+    background-repeat: no-repeat;
+    background-position: 20px 10px;
+}
+
+.ship2player {
+    border: 1px solid rgb(58, 218, 22);
+    height: 85px;
+    margin-top: 10px;
+    background-image: url(img/ship2player.png);
+    background-size: 130px;
+    background-repeat: no-repeat;
+    background-position: 20px 10px;
+}
+.ship3ia {
+    border: 1px solid rgb(58, 218, 22);
+    height: 85px;
+    margin-top: 10px;
+    background-image: url(img/ship3ia.png);
+    background-size: 130px;
+    background-repeat: no-repeat;
+    background-position: 20px;
+}
+
+.ship3player {
+    border: 1px solid rgb(58, 218, 22);
+    height: 85px;
+    margin-top: 10px;
+    background-image: url(img/ship3player.png);
+    background-size: 130px;
+    background-repeat: no-repeat;
+    background-position: 20px;
+}
+.ship4ia {
+    border: 1px solid rgb(58, 218, 22);
+    height: 85px;
+    margin-top: 10px;
+    background-image: url(img/ship4ia.png);
+    background-size: 150px;
+    background-repeat: no-repeat;
+    background-position: 20px;
+}
+
+.ship4player {
+    border: 1px solid rgb(58, 218, 22);
+    height: 85px;
+    margin-top: 10px;
+    background-image: url(img/ship4player.png);
+    background-size: 150px;
+    background-repeat: no-repeat;
+    background-position: 20px;
+}
+
+.ship5ia {
+    border: 1px solid rgb(58, 218, 22);
+    height: 85px;
+    margin-top: 10px;
+    background-image: url(img/ship5ia.png);
+    background-size: 190px;
+    background-repeat: no-repeat;
+    background-position: 8px;
+}
+
+.ship5player {
+    border: 1px solid rgb(58, 218, 22);
+    height: 85px;
+    margin-top: 10px;
+    background-image: url(img/ship5player.png);
+    background-size: 190px;
+    background-repeat: no-repeat;
+    background-position: 8px;
 }
 
 #fleet-ia {
     position: absolute;
     width: 200px;
     height: 400px;
-    border: 1px solid rgb(255, 255, 255);
     margin-left: 1150px;
     margin-top: 300px;
 }
@@ -73,7 +144,6 @@ table {
     position: absolute;
     width: 200px;
     height: 400px;
-    border: 1px solid rgb(255, 255, 255);
     margin-left: 45px;
     margin-top: 300px;
 }
