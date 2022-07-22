@@ -5,82 +5,88 @@ function BoardGame(id) {
     this.id = id
     this.canvas = document.getElementById(id)
     this.fleet = {}  
-    this.randomRow = 0
-    this.randomCol = 0
-
-
+    
+  
     //FUNCION de seleccion de la casilla:   (si pulsas sobre la casilla, muestra posición en consola)
 
     this.createCellInteraction = function() { 
         document.querySelectorAll('#' + this.id +  ' td').forEach(function(td) {
             td.addEventListener('click', function(e) {
-                var col = parseInt(e.target.getAttribute('class').charAt(3))
-                var row = parseInt(e.target.parentNode.getAttribute('class').charAt(3))
-
-                if (self.fleet === randomRow && self.fleet=== randomCol) {
-                    console.log('hasta el coño')
+                let col = parseInt(e.target.getAttribute('class').charAt(3))
+                let row = parseInt(e.target.parentNode.getAttribute('class').charAt(3))
+                let test = e.target.getAttribute('class').charAt(5) // obtiene el quinto caracter de la clase
+                if (test === 's' ){//|| test === 'h') { (lo quito porque si no no funciona)
                     td.classList.remove('starship')
                     td.classList.add('hit')
-                } else {
-                   td.classList.add('vacuum')
+
+                    // buscar el barco donde está la casilla y aumentar en hit SIEMPRE QUE NO ESTUVIERA YA EN HIT, QUE SEA NUEVA, NO REPETIDA
+                    for (var ship in self.fleet){
+                        for (var i = 0; i < self.fleet[ship].cells.length; i++) {
+                            if(col === self.fleet[ship].cells[i].col && row === self.fleet[ship].cells[i].row) { //col es igual a col dentro de cells??
+                                self.fleet[ship].hit++
+                            } 
+                        }
+                        // Comprobar si sólo tocado o tocado y hundido, antes de salid del for que lo pasa a tocado
+                        if(self.fleet[ship].hit === self.fleet[ship].cells.length) {
+                            for(var i= 0; i < self.fleet[ship].cells.length; i++) {
+                                casilla = document.querySelector('#' + id + ' .row' + self.fleet[ship].cells[i].row +
+                                ' .col' + self.fleet[ship].cells[i].col);
+                                casilla.classList.remove('hit')
+                                casilla.classList.add('destroyed')
+                            } 
+                        }
+                    }
+                } else if(test !== 'h' && test !== 'd'){
+                    td.classList.add('vacuum')
                 }
-                
-                console.log(col, row)
             })
         })  
 
     }
 
-    //     this.checkHit = function() {
-    //         let test = true
-    //         //var i = self.fleet['ship' + longShip].cells
-    //         for (var i = 0; i < self.fleet['ship' + longShip]; i++)
-    //             if (i === self.fleet['ship' + longShip].hit )
-    //             return true
-    //             console.log(i)
-    //     }
-    // }
-
 
     // FUNCION generadora de naves en horizontal
 
     this.generateHorizontalShip = function(longShip) {
-        //let randomRow = 0 
-        //let randomCol = 0
+        let randomRow = 0 
+        let randomCol = 0
+        
         for (var i = 0; i < longShip; i++) { 
-                if (i === 0) {
-                    randomRow =  Math.floor(Math.random() * 10 )   //Genero núm aleatorio [0, 9]
-                    randomCol =  Math.floor(Math.random() * (11 - longShip))   //Genero núm aleatorio [0, 9]
-                    self.fleet['ship' + longShip] = {}
-                    self.fleet['ship' + longShip].cells = []
-                    self.fleet['ship' + longShip].position = 'h'
-                    self.fleet['ship' + longShip].hit = 0
-                    let check = this.checkFreeCell('h', randomRow, randomCol, longShip)
-                        if(check === false){
-                            i--
-                        }
-                } else {
-                    randomCol += 1
-                }
-                console.log(self.fleet['ship' + longShip])
-                self.fleet['ship' + longShip].cells.push({
-                    row: randomRow,
-                    col: randomCol
-                })       
-                // self.fleet['ship' + longShip].hit +=1            //con esto añado el hit donde esté el barco
-                // console.log(self.fleet['ship' + longShip].hit)
-            } 
-            self.fleet['ship' + longShip].cells.forEach(function(td) {
-            let element = document.querySelector('#' + id + ' .row' + td.row + ' .col' + td.col)
-            element.classList.add('starship')     
-        })  
-    }
+            if (i === 0) {
+                randomRow =  Math.floor(Math.random() * 10 )   //Genero núm aleatorio [0, 9]
+                randomCol =  Math.floor(Math.random() * (11 - longShip))   //Genero núm aleatorio [0, 9]
+                self.fleet['ship' + longShip] = {}
+                self.fleet['ship' + longShip].cells = []
+                self.fleet['ship' + longShip].position = 'h'
+                self.fleet['ship' + longShip].hit = 0
+                let check = this.checkFreeCell('h', randomRow, randomCol, longShip)
+                    if(check === false){
+                        i--
+                    }
+            } else {
+                randomCol += 1
+        
+
+            }
+            self.fleet['ship' + longShip].cells.push({
+                row: randomRow,
+                col: randomCol
+
+            })       
+        } 
+        
+        self.fleet['ship' + longShip].cells.forEach(function(td) {
+                let element = document.querySelector('#' + id + ' .row' + td.row + ' .col' + td.col)
+                element.classList.add('starship')     
+            })  
+        
+    } 
 
     // FUNCION generadora de naves en vertical
 
     this.generateVerticalShip = function(longShip) {
-        //let randomRow = 0 
-        //let randomCol = 0
+        let randomRow = 0 
+        let randomCol = 0
         for (var i = 0; i < longShip; i++) { 
                 if (i === 0) {
                     randomRow =  Math.floor(Math.random() * (11 - longShip))   //Genero núm aleatorio [0, 9]
@@ -96,14 +102,14 @@ function BoardGame(id) {
 
                 } else {
                     randomRow += 1
+
+                
                 }
-                console.log(self.fleet['ship' + longShip])
                 self.fleet['ship' + longShip].cells.push({
                     row: randomRow,
                     col: randomCol
                 }) 
-                // self.fleet['ship' + longShip].hit +=1               //con esto añado el hit donde esté el barco
-                // console.log(self.fleet['ship' + longShip].hit)
+
           
             } 
             self.fleet['ship' + longShip].cells.forEach(function(td) {
@@ -161,6 +167,7 @@ function BoardGame(id) {
             }
         
     }
+
 }
 
 
