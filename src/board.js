@@ -1,4 +1,4 @@
-//FUNCION  constructora board con tablero de jugador (ok) / y ****tablero de computer (IA)**** = pendiente!!!
+//FUNCION  constructora board con tablero de jugador y del IA
 
 function BoardGame(id) {
     self = this
@@ -118,7 +118,7 @@ function BoardGame(id) {
         })  
     }
 
-    // FUNCION Star tablero posiciona aleatoriamente naves horizontales y verticales
+    // FUNCION posiciona aleatoriamente naves horizontales y verticales
 
     this.startBoard = function() { 
         this.createCellInteraction() // da como resultado agua, siempre que no se cumpla lo siguiente 
@@ -132,7 +132,7 @@ function BoardGame(id) {
         this.checkFreeCell()
     }   
     
-    //CONSEGUIR que las naves aleatorias no coincidan en las mismas casillas
+    //FUNCION naves aleatorias no coincidan en las mismas casillas
 
     this.checkFreeCell = function (pos, row, col, longShip) {
         let test = true
@@ -142,7 +142,7 @@ function BoardGame(id) {
                for (var ship in self.fleet){
                     let result = self.fleet[ship].cells.filter(function(cell) { 
                                       return cell.col === i && cell.row === row 
-                                 })
+                                    })
                     if (result.length !== 0){
                         test = false
                     }
@@ -156,15 +156,15 @@ function BoardGame(id) {
                 for (var ship in self.fleet){
                      let result = self.fleet[ship].cells.filter(function(cell) { 
                                        return cell.row === i && cell.col === col 
-                                  })
-                     if (result.length !== 0) {
+                                    })
+                    if (result.length !== 0) {
                          test = false
-                     }
+                    }
                 }
                 i++
-             }
-             return test
             }
+            return test
+        }
         
     }
 
