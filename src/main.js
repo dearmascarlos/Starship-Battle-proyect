@@ -1,12 +1,12 @@
 
 // FUNCION CONSTRUCTORA PARA EL JUEGO
 function StarshipGame() {
-    this.playerBoard = new BoardGame('gameboard-player')
     this.iaBoard = new BoardGame('gameboard-ia')
+    this.playerBoard = new BoardGame('gameboard-player')
 
     this.startGame = function() {
-        this.playerBoard.startBoard()
         this.iaBoard.startBoard()
+        this.playerBoard.startBoard()
     }
 }
 

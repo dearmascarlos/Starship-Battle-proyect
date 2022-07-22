@@ -1,9 +1,9 @@
     //FUNCION  constructora board con tablero de jugador (ok) / y ****tablero de computer (IA)**** = pendiente!!!
 
 function BoardGame(id) {
+    self = this
     this.id = id
     this.canvas = document.getElementById(id)
-    self = this
     this.fleet = {}  
 
     //FUNCION de seleccion de la casilla:   (si pulsas sobre la casilla, muestra posición en consola)
@@ -46,9 +46,8 @@ function BoardGame(id) {
                 })       
             } 
             self.fleet['ship' + longShip].cells.forEach(function(td) {
-            let element = self.canvas.querySelector('.row' + td.row + ' .col' + td.col) // necesitamos identificar los col y row (hijos de que tabla)
-            element.classList.add('starship') 
-
+            let element = document.querySelector('#' + id + ' .row' + td.row + ' .col' + td.col)
+            element.classList.add('starship')     
         })  
     }
 
@@ -81,9 +80,9 @@ function BoardGame(id) {
           
             } 
             self.fleet['ship' + longShip].cells.forEach(function(td) {
-            let element = self.canvas.querySelector('.row' + td.row + ' .col' + td.col)
+            let element = document.querySelector('#' + id + ' .row' + td.row + ' .col' + td.col)
             element.classList.add('starship') 
-         })  
+        })  
     }
 
     // FUNCION Star tablero posiciona aleatoriamente naves horizontales y verticales
@@ -103,11 +102,11 @@ function BoardGame(id) {
 
     this.checkFreeCell = function (pos, row, col, longShip) {
         let test = true
-        if (pos === 'h'){
+        if (pos === 'h') {
             var i = col
-            while (i < col + longShip && test === true){
+            while (i < col + longShip && test === true) {
                for (var ship in self.fleet){
-                    let result = self.fleet[ship].cells.filter(function(cell){ 
+                    let result = self.fleet[ship].cells.filter(function(cell) { 
                                       return cell.col === i && cell.row === row 
                                  })
                     if (result.length !== 0){
@@ -119,12 +118,12 @@ function BoardGame(id) {
             return test
         } else {
             var i = row
-            while (i < row + longShip && test === true){
+            while (i < row + longShip && test === true) {
                 for (var ship in self.fleet){
-                     let result = self.fleet[ship].cells.filter(function(cell){ 
+                     let result = self.fleet[ship].cells.filter(function(cell) { 
                                        return cell.row === i && cell.col === col 
                                   })
-                     if (result.length !== 0){
+                     if (result.length !== 0) {
                          test = false
                      }
                 }
