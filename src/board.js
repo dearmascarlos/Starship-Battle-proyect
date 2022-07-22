@@ -1,4 +1,4 @@
-    //FUNCION  constructora board con tablero de jugador (ok) / y ****tablero de computer (IA)**** = pendiente!!!
+//FUNCION  constructora board con tablero de jugador (ok) / y ****tablero de computer (IA)**** = pendiente!!!
 
 function BoardGame(id) {
     this.id = id
@@ -11,6 +11,7 @@ function BoardGame(id) {
         ship5: []
     }  
 
+
     //FUNCION de seleccion de la casilla:   (si pulsas sobre la casilla, muestra posición en consola)
 
     this.createCellInteraction = function() { 
@@ -18,7 +19,7 @@ function BoardGame(id) {
             td.addEventListener('click', function(e) {
                 var col = parseInt(e.target.getAttribute('class').charAt(3))
                 var row = parseInt(e.target.parentNode.getAttribute('class').charAt(3))
-                   console.log(row, col)
+                    console.log(row, col)
                     td.classList.add('vacuum')
             })
         })    
@@ -43,7 +44,7 @@ function BoardGame(id) {
                 })       
             } 
             self.fleet['ship' + longShip].forEach(function(td) {
-                console.log(td)
+            console.log(td)
             let element = document.querySelector('.row' + td.row + ' .col' + td.col)
             element.classList.add('starship') 
 
@@ -70,7 +71,7 @@ function BoardGame(id) {
           
             } 
             self.fleet['ship' + longShip].forEach(function(td) {
-                console.log(td)
+            console.log(td)
             let element = document.querySelector('.row' + td.row + ' .col' + td.col)
             element.classList.add('starship') 
          })  
@@ -87,25 +88,28 @@ function BoardGame(id) {
                 this.generateHorizontalShip(i)
             }
         }
+        this.checkFreeCell()
     }   
 
-//CONSEGUIR que las naves aleatorias no coincidan en las mismas casillas
+    //CONSEGUIR que las naves aleatorias no coincidan en las mismas casillas
 
     this.checkFreeCell = function (row, col) {
-        for (var i = 0; i < this.fleet.length; i++) {
-            if (this.fleet[i].row === randomRow && this.fleet[i].col === randomCol) {
-                return true
+        for (var i = 0; i < self.fleet.length; i++) {
+            if (self.fleet[i].row === self.fleet && self.fleet[i].col === randomCol) {
                 console.log('true')
-        }   else {
-                return false
+                return true;
+            } else {
                 console.log('false')
-        }
+                return false;
+            }
         }
     }
+}    
+
     // realmente no sé si esto debe ir aquí o dentro del método generatechip, para hacer las posiciones aleatorias,
     // de forma que si alguna es = ya no la haga, sino que haga otro math.random.
     // tampoco sé por qué los console.log no están funcionando...
-}
+
 
 
 
