@@ -46,7 +46,7 @@ function BoardGame(id) {
                 })       
             } 
             self.fleet['ship' + longShip].cells.forEach(function(td) {
-            let element = document.querySelector('.row' + td.row + ' .col' + td.col)
+            let element = self.canvas.querySelector('.row' + td.row + ' .col' + td.col) // necesitamos identificar los col y row (hijos de que tabla)
             element.classList.add('starship') 
 
         })  
@@ -81,7 +81,7 @@ function BoardGame(id) {
           
             } 
             self.fleet['ship' + longShip].cells.forEach(function(td) {
-            let element = document.querySelector('.row' + td.row + ' .col' + td.col)
+            let element = self.canvas.querySelector('.row' + td.row + ' .col' + td.col)
             element.classList.add('starship') 
          })  
     }
