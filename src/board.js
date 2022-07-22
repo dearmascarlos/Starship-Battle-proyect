@@ -4,12 +4,7 @@ function BoardGame(id) {
     this.id = id
     this.canvas = document.getElementById(id)
     self = this
-    this.fleet = {
-        ship2: [],
-        ship3: [],
-        ship4: [],
-        ship5: []
-    }  
+    this.fleet = {}  
 
 
     //FUNCION de seleccion de la casilla:   (si pulsas sobre la casilla, muestra posición en consola)
@@ -34,17 +29,24 @@ function BoardGame(id) {
                 if (i === 0) {
                     randomRow =  Math.floor(Math.random() * 10 )   //Genero núm aleatorio [0, 9]
                     randomCol =  Math.floor(Math.random() * (11 - longShip))   //Genero núm aleatorio [0, 9]
+                    self.fleet['ship' + longShip] = {}
+                    self.fleet['ship' + longShip].cells = []
+                    self.fleet['ship' + longShip].position = 'h'
+                    self.fleet['ship' + longShip].hit = 0
+                    let check = this.checkFreeCell('h', randomRow, randomCol, longShip)
+                        if(check === false){
+                            i--
+                        }
                 } else {
                     randomCol += 1
                 }
                 console.log(self.fleet['ship' + longShip])
-                self.fleet['ship' + longShip].push({
+                self.fleet['ship' + longShip].cells.push({
                     row: randomRow,
                     col: randomCol
                 })       
             } 
-            self.fleet['ship' + longShip].forEach(function(td) {
-            console.log(td)
+            self.fleet['ship' + longShip].cells.forEach(function(td) {
             let element = document.querySelector('.row' + td.row + ' .col' + td.col)
             element.classList.add('starship') 
 
@@ -60,18 +62,26 @@ function BoardGame(id) {
                 if (i === 0) {
                     randomRow =  Math.floor(Math.random() * (11 - longShip))   //Genero núm aleatorio [0, 9]
                     randomCol =  Math.floor(Math.random() * 10 )   //Genero núm aleatorio [0, 9]
+                    self.fleet['ship' + longShip] = {}
+                    self.fleet['ship' + longShip].cells = []
+                    self.fleet['ship' + longShip].position = 'v'
+                    self.fleet['ship' + longShip].hit = 0
+                    let check = this.checkFreeCell('v', randomRow, randomCol, longShip)
+                     if(check === false){
+                        i--
+                     }
+
                 } else {
                     randomRow += 1
                 }
                 console.log(self.fleet['ship' + longShip])
-                self.fleet['ship' + longShip].push({
+                self.fleet['ship' + longShip].cells.push({
                     row: randomRow,
                     col: randomCol
                 }) 
           
             } 
-            self.fleet['ship' + longShip].forEach(function(td) {
-            console.log(td)
+            self.fleet['ship' + longShip].cells.forEach(function(td) {
             let element = document.querySelector('.row' + td.row + ' .col' + td.col)
             element.classList.add('starship') 
          })  
@@ -90,26 +100,44 @@ function BoardGame(id) {
         }
         this.checkFreeCell()
     }   
-
+    
     //CONSEGUIR que las naves aleatorias no coincidan en las mismas casillas
 
-    this.checkFreeCell = function (row, col) {
-        for (var i = 0; i < self.fleet.length; i++) {
-            if (self.fleet[i].row === self.fleet && self.fleet[i].col === randomCol) {
-                console.log('true')
-                return true;
-            } else {
-                console.log('false')
-                return false;
+    this.checkFreeCell = function (pos, row, col, longShip) {
+        let test = true
+        if (pos === 'h'){
+            var i = col
+            while (i < col + longShip && test === true){
+               for (var ship in self.fleet){
+                    let result = self.fleet[ship].cells.filter(function(cell){ 
+                                      return cell.col === i && cell.row === row 
+                                 })
+                    if (result.length !== 0){
+                        test = false
+                    }
+               }
+               i++
             }
-        }
+            return test
+        } else {
+            var i = row
+            while (i < row + longShip && test === true){
+                for (var ship in self.fleet){
+                     let result = self.fleet[ship].cells.filter(function(cell){ 
+                                       return cell.row === i && cell.col === col 
+                                  })
+                     if (result.length !== 0){
+                         test = false
+                     }
+                }
+                i++
+             }
+             return test
+            }
+        
     }
-}    
-
-    // realmente no sé si esto debe ir aquí o dentro del método generatechip, para hacer las posiciones aleatorias,
-    // de forma que si alguna es = ya no la haga, sino que haga otro math.random.
-    // tampoco sé por qué los console.log no están funcionando...
-
+  
+}
 
 
 
