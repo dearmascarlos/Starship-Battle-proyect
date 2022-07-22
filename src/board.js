@@ -1,10 +1,12 @@
 //FUNCION  constructora board con tablero de jugador (ok) / y ****tablero de computer (IA)**** = pendiente!!!
 
 function BoardGame(id) {
+    self = this
     this.id = id
     this.canvas = document.getElementById(id)
-    self = this
     this.fleet = {}  
+    this.randomRow = 0
+    this.randomCol = 0
 
 
     //FUNCION de seleccion de la casilla:   (si pulsas sobre la casilla, muestra posición en consola)
@@ -14,17 +16,37 @@ function BoardGame(id) {
             td.addEventListener('click', function(e) {
                 var col = parseInt(e.target.getAttribute('class').charAt(3))
                 var row = parseInt(e.target.parentNode.getAttribute('class').charAt(3))
-                    console.log(row, col)
-                    td.classList.add('vacuum')
+
+                if (self.fleet === randomRow && self.fleet=== randomCol) {
+                    console.log('hasta el coño')
+                    td.classList.remove('starship')
+                    td.classList.add('hit')
+                } else {
+                   td.classList.add('vacuum')
+                }
+                
+                console.log(col, row)
             })
-        })    
+        })  
+
     }
+
+    //     this.checkHit = function() {
+    //         let test = true
+    //         //var i = self.fleet['ship' + longShip].cells
+    //         for (var i = 0; i < self.fleet['ship' + longShip]; i++)
+    //             if (i === self.fleet['ship' + longShip].hit )
+    //             return true
+    //             console.log(i)
+    //     }
+    // }
+
 
     // FUNCION generadora de naves en horizontal
 
     this.generateHorizontalShip = function(longShip) {
-        let randomRow = 0 
-        let randomCol = 0
+        //let randomRow = 0 
+        //let randomCol = 0
         for (var i = 0; i < longShip; i++) { 
                 if (i === 0) {
                     randomRow =  Math.floor(Math.random() * 10 )   //Genero núm aleatorio [0, 9]
@@ -45,19 +67,20 @@ function BoardGame(id) {
                     row: randomRow,
                     col: randomCol
                 })       
+                // self.fleet['ship' + longShip].hit +=1            //con esto añado el hit donde esté el barco
+                // console.log(self.fleet['ship' + longShip].hit)
             } 
             self.fleet['ship' + longShip].cells.forEach(function(td) {
-            let element = self.canvas.querySelector('.row' + td.row + ' .col' + td.col) // necesitamos identificar los col y row (hijos de que tabla)
-            element.classList.add('starship') 
-
+            let element = document.querySelector('#' + id + ' .row' + td.row + ' .col' + td.col)
+            element.classList.add('starship')     
         })  
     }
 
     // FUNCION generadora de naves en vertical
 
     this.generateVerticalShip = function(longShip) {
-        let randomRow = 0 
-        let randomCol = 0
+        //let randomRow = 0 
+        //let randomCol = 0
         for (var i = 0; i < longShip; i++) { 
                 if (i === 0) {
                     randomRow =  Math.floor(Math.random() * (11 - longShip))   //Genero núm aleatorio [0, 9]
@@ -79,18 +102,20 @@ function BoardGame(id) {
                     row: randomRow,
                     col: randomCol
                 }) 
+                // self.fleet['ship' + longShip].hit +=1               //con esto añado el hit donde esté el barco
+                // console.log(self.fleet['ship' + longShip].hit)
           
             } 
             self.fleet['ship' + longShip].cells.forEach(function(td) {
-            let element = self.canvas.querySelector('.row' + td.row + ' .col' + td.col)
+            let element = document.querySelector('#' + id + ' .row' + td.row + ' .col' + td.col)
             element.classList.add('starship') 
-         })  
+        })  
     }
 
     // FUNCION Star tablero posiciona aleatoriamente naves horizontales y verticales
 
     this.startBoard = function() { 
-        this.createCellInteraction() 
+        this.createCellInteraction() // da como resultado agua, siempre que no se cumpla lo siguiente 
         for(var i = 2; i < 6; i++) {
             if (Math.random() > 0.5) {
                 this.generateVerticalShip(i)
@@ -105,11 +130,11 @@ function BoardGame(id) {
 
     this.checkFreeCell = function (pos, row, col, longShip) {
         let test = true
-        if (pos === 'h'){
+        if (pos === 'h') {
             var i = col
-            while (i < col + longShip && test === true){
+            while (i < col + longShip && test === true) {
                for (var ship in self.fleet){
-                    let result = self.fleet[ship].cells.filter(function(cell){ 
+                    let result = self.fleet[ship].cells.filter(function(cell) { 
                                       return cell.col === i && cell.row === row 
                                  })
                     if (result.length !== 0){
@@ -121,12 +146,12 @@ function BoardGame(id) {
             return test
         } else {
             var i = row
-            while (i < row + longShip && test === true){
+            while (i < row + longShip && test === true) {
                 for (var ship in self.fleet){
-                     let result = self.fleet[ship].cells.filter(function(cell){ 
+                     let result = self.fleet[ship].cells.filter(function(cell) { 
                                        return cell.row === i && cell.col === col 
                                   })
-                     if (result.length !== 0){
+                     if (result.length !== 0) {
                          test = false
                      }
                 }
@@ -136,8 +161,8 @@ function BoardGame(id) {
             }
         
     }
-  
 }
+
 
 
 
