@@ -11,10 +11,15 @@ function BoardGame(id) {
     this.createCellInteraction = function() { 
         document.querySelectorAll('#' + this.id +  ' td').forEach(function(td) {
             td.addEventListener('click', function(e) {
-                var col = parseInt(e.target.getAttribute('class').charAt(3))
-                var row = parseInt(e.target.parentNode.getAttribute('class').charAt(3))
-                   console.log(row, col)
-                    td.classList.add('vacuum')
+                    let col = parseInt(e.target.getAttribute('class').charAt(3))
+                    let row = parseInt(e.target.parentNode.getAttribute('class').charAt(3))
+                    let test = e.target.getAttribute('class').charAt(5)
+                        if (test === 's' || test === 'h') {
+                        td.classList.remove('starship')
+                        td.classList.add('hit')
+                        } else {
+                        td.classList.add('vacuum')
+                        }
             })
         })    
     }
@@ -39,7 +44,6 @@ function BoardGame(id) {
                 } else {
                     randomCol += 1
                 }
-                console.log(self.fleet['ship' + longShip])
                 self.fleet['ship' + longShip].cells.push({
                     row: randomRow,
                     col: randomCol
@@ -72,7 +76,6 @@ function BoardGame(id) {
                 } else {
                     randomRow += 1
                 }
-                console.log(self.fleet['ship' + longShip])
                 self.fleet['ship' + longShip].cells.push({
                     row: randomRow,
                     col: randomCol
