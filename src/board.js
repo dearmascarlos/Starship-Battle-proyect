@@ -1,4 +1,4 @@
-    //FUNCION  constructora board con tablero de jugador (ok) / y ****tablero de computer (IA)**** = pendiente!!!
+    //FUNCION  constructora board con tablero de jugador y tablero de IA
 
 function BoardGame(id) {
     self = this
@@ -6,22 +6,29 @@ function BoardGame(id) {
     this.canvas = document.getElementById(id)
     this.fleet = {}  
 
-    //FUNCION de seleccion de la casilla:   (si pulsas sobre la casilla, muestra posición en consola)
+    //FUNCION de seleccion de la casilla
 
     this.createCellInteraction = function() { 
         document.querySelectorAll('#' + this.id +  ' td').forEach(function(td) {
             td.addEventListener('click', function(e) {
                     let col = parseInt(e.target.getAttribute('class').charAt(3))
                     let row = parseInt(e.target.parentNode.getAttribute('class').charAt(3))
-                    let test = e.target.getAttribute('class').charAt(5)
-                        if (test === 's' || test === 'h') {
+                    let hit = e.target.getAttribute('class').charAt(5)
+                        if (hit === 's' || hit === 'h') {
                         td.classList.remove('starship')
                         td.classList.add('hit')
                         } else {
                         td.classList.add('vacuum')
                         }
+                      
             })
-        })    
+        })
+           
+    }
+
+    // FUNCION contadora de hits
+    this.countHits = function(){
+              
     }
 
     // FUNCION generadora de naves en horizontal
@@ -88,7 +95,7 @@ function BoardGame(id) {
         })  
     }
 
-    // FUNCION Star tablero posiciona aleatoriamente naves horizontales y verticales
+    // FUNCION posiciona aleatoriamente naves horizontales y verticales
 
     this.startBoard = function() { 
         this.createCellInteraction() 
@@ -101,7 +108,7 @@ function BoardGame(id) {
         }
     }   
     
-    //CONSEGUIR que las naves aleatorias no coincidan en las mismas casillas
+    //FUNCION naves aleatorias no coincidan en las mismas casillas
 
     this.checkFreeCell = function (pos, row, col, longShip) {
         let test = true
@@ -111,7 +118,7 @@ function BoardGame(id) {
                for (var ship in self.fleet){
                     let result = self.fleet[ship].cells.filter(function(cell) { 
                                       return cell.col === i && cell.row === row 
-                                 })
+                                    })
                     if (result.length !== 0){
                         test = false
                     }
@@ -125,15 +132,15 @@ function BoardGame(id) {
                 for (var ship in self.fleet){
                      let result = self.fleet[ship].cells.filter(function(cell) { 
                                        return cell.row === i && cell.col === col 
-                                  })
-                     if (result.length !== 0) {
+                                    })
+                    if (result.length !== 0) {
                          test = false
-                     }
+                    }
                 }
                 i++
-             }
-             return test
             }
+            return test
+        }
         
     }
   
