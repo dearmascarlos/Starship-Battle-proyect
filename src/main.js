@@ -1,12 +1,16 @@
 
 // FUNCION CONSTRUCTORA PARA EL JUEGO
 function StarshipGame() {
-    this.iaBoard = new BoardGame('gameboard-ia')
-    this.playerBoard = new BoardGame('gameboard-player')
+    const iaBoard = new BoardGame('gameboard-ia')
+    const playerBoard = new BoardGame('gameboard-player')
 
     this.startGame = function() {
-        this.iaBoard.startBoard()
-        this.playerBoard.startBoard()
+        iaBoard.startBoard()
+        playerBoard.startBoard()
+        //while (playerBoard.destroyed < 4 && iaBoard.destroyed < 4) {
+            playerBoard.createCellInteraction(iaBoard) 
+        //}
+        //document.getElementById('dialogbox-ia').innerHTML = 'GAME OVER'
     }
 }
 

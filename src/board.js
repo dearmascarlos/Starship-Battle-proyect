@@ -1,49 +1,116 @@
 //FUNCION  constructora board con tablero de jugador y del IA
 
 function BoardGame(id) {
-    self = this
+    var self = this
     this.id = id
     this.canvas = document.getElementById(id)
-    this.fleet = {}  
+    this.fleet = {}
+    this.destroyed = 0
+    this.pickIa = []
     
   
     //FUNCION de seleccion de la casilla:   (si pulsas sobre la casilla, muestra posición en consola)
 
-    this.createCellInteraction = function() { 
-        document.querySelectorAll('#' + this.id +  ' td').forEach(function(td) {
+    this.createCellInteraction = function(ia) { 
+        document.querySelectorAll('#' + ia.id +  ' td').forEach(function(td) {
             td.addEventListener('click', function(e) {
+            
                 let col = parseInt(e.target.getAttribute('class').charAt(3))
                 let row = parseInt(e.target.parentNode.getAttribute('class').charAt(3))
-                let test = e.target.getAttribute('class').charAt(5) // obtiene el quinto caracter de la clase
-                if (test === 's' ){//|| test === 'h') { (lo quito porque si no no funciona)
+                let testHit = e.target.getAttribute('class').charAt(5) // obtiene el CUARTO caracter de la clase
+                console.log(e.target)
+                if (testHit === 's'){
                     td.classList.remove('starship')
                     td.classList.add('hit')
-
-                    // buscar el barco donde está la casilla y aumentar en hit SIEMPRE QUE NO ESTUVIERA YA EN HIT, QUE SEA NUEVA, NO REPETIDA
-                    for (var ship in self.fleet){
-                        for (var i = 0; i < self.fleet[ship].cells.length; i++) {
-                            if(col === self.fleet[ship].cells[i].col && row === self.fleet[ship].cells[i].row) { //col es igual a col dentro de cells??
-                                self.fleet[ship].hit++
+                    document.getElementById('dialogbox-ia').innerHTML = 'HIT !!!'
+            
+                    //buscar el barco donde está la casilla y aumentar en hit SIEMPRE QUE NO ESTUVIERA YA EN HIT, QUE SEA NUEVA, NO REPETIDA
+                    for (var ship in ia.fleet) {
+                        for (var i = 0; i < ia.fleet[ship].cells.length; i++) {
+                            if(col === ia.fleet[ship].cells[i].col && row === ia.fleet[ship].cells[i].row) {
+                                ia.fleet[ship].hit++
                             } 
                         }
-                        // Comprobar si sólo tocado o tocado y hundido, antes de salid del for que lo pasa a tocado
-                        if(self.fleet[ship].hit === self.fleet[ship].cells.length) {
-                            for(var i= 0; i < self.fleet[ship].cells.length; i++) {
-                                casilla = document.querySelector('#' + id + ' .row' + self.fleet[ship].cells[i].row +
-                                ' .col' + self.fleet[ship].cells[i].col);
-                                casilla.classList.remove('hit')
-                                casilla.classList.add('destroyed')
+                           
+                        // Comprobar si sólo tocado o tocado y hundido, antes de sali del for que lo pasa a tocado
+                        if(ia.fleet[ship].hit === ia.fleet[ship].cells.length) {
+                            for(var i= 0; i < ia.fleet[ship].cells.length; i++) {
+                                let testDestroyed = document.querySelector('#' + ia.id + ' .row' + ia.fleet[ship].cells[i].row + ' .col' + ia.fleet[ship].cells[i].col);
+                                testDestroyed.classList.remove('hit')
+                                testDestroyed.classList.add('destroyed')
+                                ia.destroyed++
+                                document.getElementById('dialogbox-ia').innerHTML = 'DESTROYED !'
+                                
                             } 
                         }
                     }
-                } else if(test !== 'h' && test !== 'd'){
+                } else if(testHit !== 'h' && testHit !== 'd') {
                     td.classList.add('vacuum')
+                    document.getElementById('dialogbox-ia').innerHTML = 'VACUUM'
                 }
+                // TURNO IA
+                self.iaTurn()
             })
         })  
-
     }
 
+    this.createRandomCoor = function(){
+        randomRow =  Math.floor(Math.random() * 10)   //Genero núm aleatorio [0, 9]
+        randomCol =  Math.floor(Math.random() * 10)   //Genero núm aleatorio [0, 9]
+        var coor = {
+            row: randomRow,
+            col: randomCol
+        }
+        let result = self.pickIa.filter(function(cell) { 
+            return cell.col === coor.col && cell.row === coor.row 
+          })
+          if(result.length > 0){
+            return false
+          } else {
+            return coor
+          }
+    }
+    this.iaTurn = function() {
+        let coor = self.createRandomCoor()
+        while(coor === false){
+            self.createRandomCoor()
+        }
+        this.pickIa.push(coor)
+        console.log(randomCol, randomRow)
+        let select = document.querySelector('#' + self.id + ' .row' + coor.row + ' .col' + coor.col)
+        let testHit = select.getAttribute('class').charAt(3)
+        console.log(select.getAttribute('class'))
+                if (testHit === 's'){
+                    testHit.classList.remove('starship')
+                    testHit.classList.add('hit')
+                    document.getElementById('dialogbox-player').innerHTML = 'HIT !!!'
+            
+                    //buscar el barco donde está la casilla y aumentar en hit SIEMPRE QUE NO ESTUVIERA YA EN HIT, QUE SEA NUEVA, NO REPETIDA
+                    for (var ship in self.fleet) {
+                        for (var i = 0; i < self.fleet[ship].cells.length; i++) {
+                            if(col === self.fleet[ship].cells[i].col && row === self.fleet[ship].cells[i].row) {
+                                self.fleet[ship].hit++
+                                console.log(self.fleet)
+                            } 
+                        }
+                           
+                        // Comprobar si sólo tocado o tocado y hundido, antes de sali del for que lo pasa a tocado
+                        if(self.fleet[ship].hit === self.fleet[ship].cells.length) {
+                            for(var i= 0; i < self.fleet[ship].cells.length; i++) {
+                                let testDestroyed = document.querySelector('#' + self.id + ' .row' + self.fleet[ship].cells[i].row + ' .col' + self.fleet[ship].cells[i].col);
+                                testDestroyed.classList.remove('hit')
+                                testDestroyed.classList.add('destroyed')
+                                self.destroyed++
+                                document.getElementById('dialogbox-player').innerHTML = 'DESTROYED !'
+                                
+                            } 
+                        }
+                    }
+                } else if(testHit !== 'h' && testHit !== 'd') {
+                    testHit.classList.add('vacuum')
+                    document.getElementById('dialogbox-player').innerHTML = 'VACUUM'
+                }
+    }
 
     // FUNCION generadora de naves en horizontal
 
@@ -121,15 +188,14 @@ function BoardGame(id) {
     // FUNCION posiciona aleatoriamente naves horizontales y verticales
 
     this.startBoard = function() { 
-        this.createCellInteraction() // da como resultado agua, siempre que no se cumpla lo siguiente 
         for(var i = 2; i < 6; i++) {
             if (Math.random() > 0.5) {
                 this.generateVerticalShip(i)
             } else {
                 this.generateHorizontalShip(i)
-            }
-        }
-        this.checkFreeCell()
+            }   
+        } 
+        //this.checkFreeCell()
     }   
     
     //FUNCION naves aleatorias no coincidan en las mismas casillas
