@@ -8,7 +8,7 @@ function StarshipGame() {
         iaBoard.startBoard()
         playerBoard.startBoard()
         //while (playerBoard.destroyed < 4 && iaBoard.destroyed < 4) {
-            playerBoard.createCellInteraction(iaBoard) 
+        playerBoard.createCellInteraction(iaBoard) 
         //}
         //document.getElementById('dialogbox-ia').innerHTML = 'GAME OVER'
     }

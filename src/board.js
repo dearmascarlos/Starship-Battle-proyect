@@ -58,7 +58,10 @@ function BoardGame(id) {
     this.createRandomCoor = function() {
         randomRow =  Math.floor(Math.random() * 10)   //Genero núm aleatorio [0, 9]
         randomCol =  Math.floor(Math.random() * 10)   //Genero núm aleatorio [0, 9]
-        let coor = {row: randomRow, col: randomCol}
+        let coor = {
+            row: randomRow,
+            col: randomCol
+        }
         let result = self.pickIa.filter(function(cell) { 
             return cell.col === coor.col && cell.row === coor.row 
            })
@@ -75,9 +78,9 @@ function BoardGame(id) {
            coor = self.createRandomCoor()
         }
         this.pickIa.push(coor)
-        let select = document.querySelector('#' + self.id + ' .row' + randomRow + ' .col' + randomCol)
+        let select = document.querySelector('#' + self.id + ' .row' + coor.row + ' .col' + coor.col)
         let col = parseInt(select.getAttribute('class').charAt(3))
-        let row = parseInt(select.getAttribute('class').charAt(3))
+        let row = parseInt(select.parentNode.getAttribute('class').charAt(3))
         let testHit = select.getAttribute('class').charAt(5)
                 if (testHit === 's'){
                     select.classList.remove('starship')
