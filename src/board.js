@@ -18,7 +18,6 @@ function BoardGame(id) {
                 let col = parseInt(e.target.getAttribute('class').charAt(3))
                 let row = parseInt(e.target.parentNode.getAttribute('class').charAt(3))
                 let testHit = e.target.getAttribute('class').charAt(5) // obtiene el CUARTO caracter de la clase
-                console.log(e.target)
                 if (testHit === 's'){
                     td.classList.remove('starship')
                     td.classList.add('hit')
@@ -57,57 +56,58 @@ function BoardGame(id) {
     this.createRandomCoor = function(){
         randomRow =  Math.floor(Math.random() * 10)   //Genero núm aleatorio [0, 9]
         randomCol =  Math.floor(Math.random() * 10)   //Genero núm aleatorio [0, 9]
-        var coor = {
+        let coor = {
             row: randomRow,
             col: randomCol
-        }
+            }
         let result = self.pickIa.filter(function(cell) { 
             return cell.col === coor.col && cell.row === coor.row 
-          })
-          if(result.length > 0){
-            return false
-          } else {
-            return coor
-          }
+           })
+           if(result.length > 0){
+                return true
+           } else {
+                return coor
+           }
     }
+    
     this.iaTurn = function() {
         let coor = self.createRandomCoor()
-        while(coor === false){
+        //while (coor === true){
             self.createRandomCoor()
-        }
+       // }
         this.pickIa.push(coor)
-        console.log(randomCol, randomRow)
-        let select = document.querySelector('#' + self.id + ' .row' + coor.row + ' .col' + coor.col)
-        let testHit = select.getAttribute('class').charAt(3)
-        console.log(select.getAttribute('class'))
+        let select = document.querySelector('#' + self.id + ' .row' + randomRow + ' .col' + randomCol)
+        let col = select.getAttribute('class').charAt(3)
+        let row = select.getAttribute('class').charAt(3)
+        let testHit = select.getAttribute('class').charAt(5)
+        console.log(testHit)
                 if (testHit === 's'){
-                    testHit.classList.remove('starship')
-                    testHit.classList.add('hit')
+                    select.classList.remove('starship')
+                    select.classList.add('hit')
                     document.getElementById('dialogbox-player').innerHTML = 'HIT !!!'
             
-                    //buscar el barco donde está la casilla y aumentar en hit SIEMPRE QUE NO ESTUVIERA YA EN HIT, QUE SEA NUEVA, NO REPETIDA
+                //     //buscar el barco donde está la casilla y aumentar en hit SIEMPRE QUE NO ESTUVIERA YA EN HIT, QUE SEA NUEVA, NO REPETIDA
                     for (var ship in self.fleet) {
                         for (var i = 0; i < self.fleet[ship].cells.length; i++) {
                             if(col === self.fleet[ship].cells[i].col && row === self.fleet[ship].cells[i].row) {
                                 self.fleet[ship].hit++
-                                console.log(self.fleet)
-                            } 
-                        }
+                                } 
+                            }
                            
-                        // Comprobar si sólo tocado o tocado y hundido, antes de sali del for que lo pasa a tocado
+                //         // Comprobar si sólo tocado o tocado y hundido, antes de sali del for que lo pasa a tocado
                         if(self.fleet[ship].hit === self.fleet[ship].cells.length) {
                             for(var i= 0; i < self.fleet[ship].cells.length; i++) {
-                                let testDestroyed = document.querySelector('#' + self.id + ' .row' + self.fleet[ship].cells[i].row + ' .col' + self.fleet[ship].cells[i].col);
+                                let testDestroyed = document.querySelector('#' + self.id + ' .row' + self.fleet[ship].cells[i] + ' .col' + self.fleet[ship].cells[i]);
                                 testDestroyed.classList.remove('hit')
                                 testDestroyed.classList.add('destroyed')
                                 self.destroyed++
                                 document.getElementById('dialogbox-player').innerHTML = 'DESTROYED !'
                                 
-                            } 
-                        }
-                    }
+                             } 
+                         }
+                     }
                 } else if(testHit !== 'h' && testHit !== 'd') {
-                    testHit.classList.add('vacuum')
+                    select.classList.add('vacuum')
                     document.getElementById('dialogbox-player').innerHTML = 'VACUUM'
                 }
     }
