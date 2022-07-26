@@ -63,6 +63,16 @@ table {
     background-repeat: no-repeat;
     background-position: 20px 10px;
 }
+.ship2ia-destroyed {
+    border: 1px solid rgb(241, 11, 11);
+    height: 85px;
+    margin-top: 10px;
+    background-image: url(img/ship2ia.png);
+    filter: blur4(px);
+    background-size: 130px;
+    background-repeat: no-repeat;
+    background-position: 20px 10px;
+}
 
 .ship2player {
     border: 1px solid rgb(58, 218, 22);
@@ -177,6 +187,28 @@ table {
     background-size: contain;
 }
 
+#name-ia {
+    width: 400px;
+    height: 50px;
+    position: absolute;
+    font-size: 40px;
+    text-align: center;
+    color: rgb(255, 174, 0);
+    margin-left: 720px;
+    margin-top: 835px;
+}
+
+#name-player {
+    width: 450px;
+    height: 50px;
+    position: absolute;
+    font-size: 40px;
+    text-align: center;
+    color: rgb(255, 174, 0);
+    margin-left: 257px;
+    margin-top: 835px;
+}
+
 #starship-player-img {
     position: absolute; left: 90px; top: 100px;
     background-image: url(../css/img/starship-player.png);
@@ -225,8 +257,8 @@ table {
     background-color: grey;
 }
 
-.starship{
-    background-color: blueviolet;
+#gameboard-player .starship{
+    background-color: rgba(150, 24, 200, 0.75);
 }
 
 
