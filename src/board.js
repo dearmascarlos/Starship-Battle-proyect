@@ -25,34 +25,8 @@ function BoardGame(id) {
                         td.classList.add('hit')
                         document.getElementById('dialogbox-ia').innerHTML = 'HIT !!!'
                 
-                        //buscar el barco donde está la casilla y aumentar en hit SIEMPRE QUE NO ESTUVIERA YA EN HIT, QUE SEA NUEVA, NO REPETIDA
-                        for (var ship in ia.fleet) {
-                            for (var i = 0; i < ia.fleet[ship].cells.length; i++) {
-                                console.log(col, row)
-                                if(col === ia.fleet[ship].cells[i].col && row === ia.fleet[ship].cells[i].row) {
-                                    ia.fleet[ship].hit++
-                                    console.log(ia.fleet)
-                                } 
-                            }
-                            
-                            // Comprobar si sólo tocado o tocado y hundido, antes de sali del for que lo pasa a tocado
-                            if(ia.fleet[ship].hit === ia.fleet[ship].cells.length) {
-                                for(var i= 0; i < ia.fleet[ship].cells.length; i++) {
-                                    let testDestroyed = document.querySelector('#' + ia.id + ' .row' + ia.fleet[ship].cells[i].row + ' .col' + ia.fleet[ship].cells[i].col);
-                                    testDestroyed.classList.remove('hit')
-                                    testDestroyed.classList.add('destroyed')
-                                    document.getElementById('dialogbox-ia').innerHTML = 'DESTROYED !'
-                                }
-                                ia.fleet[ship].hit = 'sinked'
-                                ia.destroyed++
-                                    console.log(ia.destroyed)
-                                    if(ia.destroyed === 4){
-                                        console.log('OK')
-                                        self.continue = false
-                                        ia.gameOver('player')
-                                    } 
-                            }
-                        }
+                    //buscar el barco donde está la casilla y aumentar en hit SIEMPRE QUE NO ESTUVIERA YA EN HIT, QUE SEA NUEVA, NO REPETIDA
+                    self.checkPlace (ia, self, row, col)
                     } else if(testHit !== 'h' && testHit !== 'd') {
                         td.classList.add('vacuum')
                         document.getElementById('dialogbox-ia').innerHTML = 'VACUUM'
@@ -64,6 +38,36 @@ function BoardGame(id) {
                 })
             })
         }      
+    }
+    this.checkPlace = function(enemy, gamer, row, col){
+        for (var ship in enemy.fleet) {
+            for (var i = 0; i < enemy.fleet[ship].cells.length; i++) {
+                if(col === enemy.fleet[ship].cells[i].col && row === enemy.fleet[ship].cells[i].row) {
+                    enemy.fleet[ship].hit++
+                    console.log(enemy.fleet)
+                } 
+            }
+            
+            // Comprobar si sólo tocado o tocado y hundido, antes de sali del for que lo pasa a tocado
+            if(enemy.fleet[ship].hit === enemy.fleet[ship].cells.length) {
+                for(var i= 0; i < enemy.fleet[ship].cells.length; i++) {
+                    let testDestroyed = document.querySelector('#' + enemy.id + ' .row' + enemy.fleet[ship].cells[i].row + ' .col' + enemy.fleet[ship].cells[i].col)
+                    testDestroyed.classList.remove('hit')
+                    testDestroyed.classList.add('destroyed')
+                    if(enemy.id === 'gameboard-ia') {
+                        document.getElementById('dialogbox-ia').innerHTML = 'DESTROYED !'
+                    } else {
+                        document.getElementById('dialogbox-player').innerHTML = 'DESTROYED !'    
+                    }
+                }
+            enemy.fleet[ship].hit = 'sinked'
+            enemy.destroyed++
+                    if(enemy.destroyed === 4) {
+                        gamer.continue = false
+                    gamer.gameOver(enemy.id)
+                    } 
+            }
+        }
     }
 
     this.createRandomCoor = function() {
@@ -100,33 +104,8 @@ function BoardGame(id) {
         
                    //buscar el barco donde está la casilla y aumentar en hit SIEMPRE QUE NO ESTUVIERA YA EN HIT, QUE SEA NUEVA, NO REPETIDA
 
-                    for (var ship in self.fleet) {
-                        for (var i = 0; i < self.fleet[ship].cells.length; i++) {
-                            console.log(col, row)
-                            if(col === self.fleet[ship].cells[i].col && row === self.fleet[ship].cells[i].row) {
-                               self.fleet[ship].hit++
-                                console.log('entra')
-                                console.log(ship)
-                            } 
-                        }
-                           
-                                // Comprobar si sólo tocado o tocado y hundido, antes de sali del for que lo pasa a tocado
-                        if(self.fleet[ship].hit === self.fleet[ship].cells.length) {
-                            for(var i= 0; i < self.fleet[ship].cells.length; i++) {
-                                let testDestroyed = document.querySelector('#' + self.id + ' .row' + self.fleet[ship].cells[i].row + ' .col' + self.fleet[ship].cells[i].col) 
-                                testDestroyed.classList.remove('hit')
-                                testDestroyed.classList.add('destroyed')
-                         
-                                document.getElementById('dialogbox-player').innerHTML = 'DESTROYED !'
-                                
-                            } 
-                            self.fleet[ship].hit = 'sinked'
-                            self.destroyed++
-                            if(self.destroyed === 4){
-                                this.gameOver('ia')
-                            }
-                        }
-                    }
+                    self.checkPlace(self, self, row, col)
+                    
                 } else if(testHit !== 'h' && testHit !== 'd') {
                     select.classList.add('vacuum')
                     document.getElementById('dialogbox-player').innerHTML = 'VACUUM'
@@ -256,13 +235,13 @@ function BoardGame(id) {
         
     }
 
-    this.gameOver = function(winner){
-        if(winner === 'player'){
-            document.getElementById('dialogbox-ia').innerHTML = 'GAME OVER'
-            document.getElementById('dialogbox-player').innerHTML = 'YOU WIN !'
-        } else {
-            document.getElementById('dialogbox-ia').innerHTML = 'YOU WIN !'
+    this.gameOver = function(loser ){
+        if(loser === 'gameboard-player'){
+            document.getElementById('dialogbox-ia').innerHTML = 'IA WINS'
             document.getElementById('dialogbox-player').innerHTML = 'GAME OVER'
+        } else {
+            document.getElementById('dialogbox-ia').innerHTML = 'GAME OVER'
+            document.getElementById('dialogbox-player').innerHTML = 'YOU WIN'
         }
 
     }
