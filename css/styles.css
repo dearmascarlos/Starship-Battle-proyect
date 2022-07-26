@@ -152,6 +152,7 @@ table {
     position: absolute;
     font-size: 60px;
     text-align: center;
+    text-size-adjust: contain;
     color: red;
     width: 400px;
     height: 100px;
@@ -164,7 +165,7 @@ table {
 
 #dialogbox-player {
     position: absolute;
-    font-size: 40px;
+    font-size: 60px;
     text-align: center;
     color: red;
     width: 400px;

@@ -26,8 +26,10 @@ function BoardGame(id) {
                     //buscar el barco donde está la casilla y aumentar en hit SIEMPRE QUE NO ESTUVIERA YA EN HIT, QUE SEA NUEVA, NO REPETIDA
                     for (var ship in ia.fleet) {
                         for (var i = 0; i < ia.fleet[ship].cells.length; i++) {
+                            console.log(col, row)
                             if(col === ia.fleet[ship].cells[i].col && row === ia.fleet[ship].cells[i].row) {
                                 ia.fleet[ship].hit++
+                                console.log(ia.fleet)
                             } 
                         }
                            
@@ -53,18 +55,15 @@ function BoardGame(id) {
         })  
     }
 
-    this.createRandomCoor = function(){
+    this.createRandomCoor = function() {
         randomRow =  Math.floor(Math.random() * 10)   //Genero núm aleatorio [0, 9]
         randomCol =  Math.floor(Math.random() * 10)   //Genero núm aleatorio [0, 9]
-        let coor = {
-            row: randomRow,
-            col: randomCol
-            }
+        let coor = {row: randomRow, col: randomCol}
         let result = self.pickIa.filter(function(cell) { 
             return cell.col === coor.col && cell.row === coor.row 
            })
-           if(result.length > 0){
-                return true
+           if(result.length > 0) {
+                return false
            } else {
                 return coor
            }
@@ -72,44 +71,48 @@ function BoardGame(id) {
     
     this.iaTurn = function() {
         let coor = self.createRandomCoor()
-        //while (coor === true){
-            self.createRandomCoor()
-       // }
+        while (coor === false) {
+           coor = self.createRandomCoor()
+        }
         this.pickIa.push(coor)
         let select = document.querySelector('#' + self.id + ' .row' + randomRow + ' .col' + randomCol)
-        let col = select.getAttribute('class').charAt(3)
-        let row = select.getAttribute('class').charAt(3)
+        let col = parseInt(select.getAttribute('class').charAt(3))
+        let row = parseInt(select.getAttribute('class').charAt(3))
         let testHit = select.getAttribute('class').charAt(5)
-        console.log(testHit)
                 if (testHit === 's'){
                     select.classList.remove('starship')
                     select.classList.add('hit')
                     document.getElementById('dialogbox-player').innerHTML = 'HIT !!!'
-            
-                //     //buscar el barco donde está la casilla y aumentar en hit SIEMPRE QUE NO ESTUVIERA YA EN HIT, QUE SEA NUEVA, NO REPETIDA
+        
+                   //buscar el barco donde está la casilla y aumentar en hit SIEMPRE QUE NO ESTUVIERA YA EN HIT, QUE SEA NUEVA, NO REPETIDA
+
                     for (var ship in self.fleet) {
                         for (var i = 0; i < self.fleet[ship].cells.length; i++) {
+                            console.log(col, row)
                             if(col === self.fleet[ship].cells[i].col && row === self.fleet[ship].cells[i].row) {
-                                self.fleet[ship].hit++
-                                } 
-                            }
+                               self.fleet[ship].hit++
+                                console.log('entra')
+                                console.log(ship)
+                            } 
+                        }
                            
-                //         // Comprobar si sólo tocado o tocado y hundido, antes de sali del for que lo pasa a tocado
+                                // Comprobar si sólo tocado o tocado y hundido, antes de sali del for que lo pasa a tocado
                         if(self.fleet[ship].hit === self.fleet[ship].cells.length) {
                             for(var i= 0; i < self.fleet[ship].cells.length; i++) {
-                                let testDestroyed = document.querySelector('#' + self.id + ' .row' + self.fleet[ship].cells[i] + ' .col' + self.fleet[ship].cells[i]);
+                                let testDestroyed = document.querySelector('#' + self.id + ' .row' + self.fleet[ship].cells[i].row + ' .col' + self.fleet[ship].cells[i].col) 
                                 testDestroyed.classList.remove('hit')
                                 testDestroyed.classList.add('destroyed')
                                 self.destroyed++
                                 document.getElementById('dialogbox-player').innerHTML = 'DESTROYED !'
                                 
-                             } 
-                         }
-                     }
+                            } 
+                        }
+                    }
                 } else if(testHit !== 'h' && testHit !== 'd') {
                     select.classList.add('vacuum')
                     document.getElementById('dialogbox-player').innerHTML = 'VACUUM'
                 }
+                    
     }
 
     // FUNCION generadora de naves en horizontal
