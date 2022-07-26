@@ -7,52 +7,63 @@ function BoardGame(id) {
     this.fleet = {}
     this.destroyed = 0
     this.pickIa = []
+    this.continue = true
     
   
     //FUNCION de seleccion de la casilla:   (si pulsas sobre la casilla, muestra posición en consola)
 
-    this.createCellInteraction = function(ia) { 
-        document.querySelectorAll('#' + ia.id +  ' td').forEach(function(td) {
-            td.addEventListener('click', function(e) {
-            
-                let col = parseInt(e.target.getAttribute('class').charAt(3))
-                let row = parseInt(e.target.parentNode.getAttribute('class').charAt(3))
-                let testHit = e.target.getAttribute('class').charAt(5) // obtiene el CUARTO caracter de la clase
-                if (testHit === 's'){
-                    td.classList.remove('starship')
-                    td.classList.add('hit')
-                    document.getElementById('dialogbox-ia').innerHTML = 'HIT !!!'
-            
-                    //buscar el barco donde está la casilla y aumentar en hit SIEMPRE QUE NO ESTUVIERA YA EN HIT, QUE SEA NUEVA, NO REPETIDA
-                    for (var ship in ia.fleet) {
-                        for (var i = 0; i < ia.fleet[ship].cells.length; i++) {
-                            console.log(col, row)
-                            if(col === ia.fleet[ship].cells[i].col && row === ia.fleet[ship].cells[i].row) {
-                                ia.fleet[ship].hit++
-                                console.log(ia.fleet)
-                            } 
-                        }
-                           
-                        // Comprobar si sólo tocado o tocado y hundido, antes de sali del for que lo pasa a tocado
-                        if(ia.fleet[ship].hit === ia.fleet[ship].cells.length) {
-                            for(var i= 0; i < ia.fleet[ship].cells.length; i++) {
-                                let testDestroyed = document.querySelector('#' + ia.id + ' .row' + ia.fleet[ship].cells[i].row + ' .col' + ia.fleet[ship].cells[i].col);
-                                testDestroyed.classList.remove('hit')
-                                testDestroyed.classList.add('destroyed')
+    this.createCellInteraction = function(ia) {
+        if(self.continue === true){
+            document.querySelectorAll('#' + ia.id +  ' td').forEach(function(td) {
+                td.addEventListener('click', function(e) {
+                
+                    let col = parseInt(e.target.getAttribute('class').charAt(3))
+                    let row = parseInt(e.target.parentNode.getAttribute('class').charAt(3))
+                    let testHit = e.target.getAttribute('class').charAt(5) // obtiene el CUARTO caracter de la clase
+                    if (testHit === 's'){
+                        td.classList.remove('starship')
+                        td.classList.add('hit')
+                        document.getElementById('dialogbox-ia').innerHTML = 'HIT !!!'
+                
+                        //buscar el barco donde está la casilla y aumentar en hit SIEMPRE QUE NO ESTUVIERA YA EN HIT, QUE SEA NUEVA, NO REPETIDA
+                        for (var ship in ia.fleet) {
+                            for (var i = 0; i < ia.fleet[ship].cells.length; i++) {
+                                console.log(col, row)
+                                if(col === ia.fleet[ship].cells[i].col && row === ia.fleet[ship].cells[i].row) {
+                                    ia.fleet[ship].hit++
+                                    console.log(ia.fleet)
+                                } 
+                            }
+                            
+                            // Comprobar si sólo tocado o tocado y hundido, antes de sali del for que lo pasa a tocado
+                            if(ia.fleet[ship].hit === ia.fleet[ship].cells.length) {
+                                for(var i= 0; i < ia.fleet[ship].cells.length; i++) {
+                                    let testDestroyed = document.querySelector('#' + ia.id + ' .row' + ia.fleet[ship].cells[i].row + ' .col' + ia.fleet[ship].cells[i].col);
+                                    testDestroyed.classList.remove('hit')
+                                    testDestroyed.classList.add('destroyed')
+                                    document.getElementById('dialogbox-ia').innerHTML = 'DESTROYED !'
+                                }
+                                ia.fleet[ship].hit = 'sinked'
                                 ia.destroyed++
-                                document.getElementById('dialogbox-ia').innerHTML = 'DESTROYED !'
-                                
-                            } 
+                                    console.log(ia.destroyed)
+                                    if(ia.destroyed === 4){
+                                        console.log('OK')
+                                        self.continue = false
+                                        ia.gameOver('player')
+                                    } 
+                            }
                         }
+                    } else if(testHit !== 'h' && testHit !== 'd') {
+                        td.classList.add('vacuum')
+                        document.getElementById('dialogbox-ia').innerHTML = 'VACUUM'
                     }
-                } else if(testHit !== 'h' && testHit !== 'd') {
-                    td.classList.add('vacuum')
-                    document.getElementById('dialogbox-ia').innerHTML = 'VACUUM'
-                }
-                // TURNO IA
-                self.iaTurn()
+                    // TURNO IA
+                    if(self.continue === true){
+                    self.iaTurn()
+                    }
+                })
             })
-        })  
+        }      
     }
 
     this.createRandomCoor = function() {
@@ -105,10 +116,15 @@ function BoardGame(id) {
                                 let testDestroyed = document.querySelector('#' + self.id + ' .row' + self.fleet[ship].cells[i].row + ' .col' + self.fleet[ship].cells[i].col) 
                                 testDestroyed.classList.remove('hit')
                                 testDestroyed.classList.add('destroyed')
-                                self.destroyed++
+                         
                                 document.getElementById('dialogbox-player').innerHTML = 'DESTROYED !'
                                 
                             } 
+                            self.fleet[ship].hit = 'sinked'
+                            self.destroyed++
+                            if(self.destroyed === 4){
+                                this.gameOver('ia')
+                            }
                         }
                     }
                 } else if(testHit !== 'h' && testHit !== 'd') {
@@ -238,6 +254,17 @@ function BoardGame(id) {
             return test
         }
         
+    }
+
+    this.gameOver = function(winner){
+        if(winner === 'player'){
+            document.getElementById('dialogbox-ia').innerHTML = 'GAME OVER'
+            document.getElementById('dialogbox-player').innerHTML = 'YOU WIN !'
+        } else {
+            document.getElementById('dialogbox-ia').innerHTML = 'YOU WIN !'
+            document.getElementById('dialogbox-player').innerHTML = 'GAME OVER'
+        }
+
     }
 
 }
