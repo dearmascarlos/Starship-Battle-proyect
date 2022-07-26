@@ -16,7 +16,6 @@ function BoardGame(id) {
         if(self.continue === true){
             document.querySelectorAll('#' + ia.id +  ' td').forEach(function(td) {
                 td.addEventListener('click', function(e) {
-                
                     let col = parseInt(e.target.getAttribute('class').charAt(3))
                     let row = parseInt(e.target.parentNode.getAttribute('class').charAt(3))
                     let testHit = e.target.getAttribute('class').charAt(5) // obtiene el CUARTO caracter de la clase
@@ -25,13 +24,12 @@ function BoardGame(id) {
                         td.classList.add('hit')
                         document.getElementById('dialogbox-ia').innerHTML = 'HIT !!!'
                 
-                    //buscar el barco donde está la casilla y aumentar en hit SIEMPRE QUE NO ESTUVIERA YA EN HIT, QUE SEA NUEVA, NO REPETIDA
                     self.checkPlace (ia, self, row, col)
                     } else if(testHit !== 'h' && testHit !== 'd') {
                         td.classList.add('vacuum')
                         document.getElementById('dialogbox-ia').innerHTML = 'VACUUM'
                     }
-                    // TURNO IA
+                    // TURNO IA // impide que puedas pulsar dos veces antes de la respuesta IA
                     if(self.continue === true){
                     self.iaTurn()
                     }
@@ -39,6 +37,8 @@ function BoardGame(id) {
             })
         }      
     }
+    //CONTADORA HIT
+    //buscar el barco donde está la casilla y aumentar en hit SIEMPRE QUE NO ESTUVIERA YA EN HIT, QUE SEA NUEVA, NO REPETIDA
     this.checkPlace = function(enemy, gamer, row, col){
         for (var ship in enemy.fleet) {
             for (var i = 0; i < enemy.fleet[ship].cells.length; i++) {
@@ -48,7 +48,7 @@ function BoardGame(id) {
                 } 
             }
             
-            // Comprobar si sólo tocado o tocado y hundido, antes de sali del for que lo pasa a tocado
+            // Comprobar si sólo tocado o tocado y hundido, antes de salir del for que lo pasa a tocado
             if(enemy.fleet[ship].hit === enemy.fleet[ship].cells.length) {
                 for(var i= 0; i < enemy.fleet[ship].cells.length; i++) {
                     let testDestroyed = document.querySelector('#' + enemy.id + ' .row' + enemy.fleet[ship].cells[i].row + ' .col' + enemy.fleet[ship].cells[i].col)
@@ -70,6 +70,7 @@ function BoardGame(id) {
         }
     }
 
+    // CREA coordenadas aleatorias y que no se repitan para IA
     this.createRandomCoor = function() {
         randomRow =  Math.floor(Math.random() * 10)   //Genero núm aleatorio [0, 9]
         randomCol =  Math.floor(Math.random() * 10)   //Genero núm aleatorio [0, 9]
@@ -87,6 +88,7 @@ function BoardGame(id) {
            }
     }
     
+    // MOVIMIENTOS DEL IA
     this.iaTurn = function() {
         let coor = self.createRandomCoor()
         while (coor === false) {
@@ -114,7 +116,6 @@ function BoardGame(id) {
     }
 
     // FUNCION generadora de naves en horizontal
-
     this.generateHorizontalShip = function(longShip) {
         let randomRow = 0 
         let randomCol = 0
@@ -151,7 +152,6 @@ function BoardGame(id) {
     } 
 
     // FUNCION generadora de naves en vertical
-
     this.generateVerticalShip = function(longShip) {
         let randomRow = 0 
         let randomCol = 0
@@ -187,7 +187,6 @@ function BoardGame(id) {
     }
 
     // FUNCION posiciona aleatoriamente naves horizontales y verticales
-
     this.startBoard = function() { 
         for(var i = 2; i < 6; i++) {
             if (Math.random() > 0.5) {
@@ -196,11 +195,9 @@ function BoardGame(id) {
                 this.generateHorizontalShip(i)
             }   
         } 
-        //this.checkFreeCell()
     }   
     
     //FUNCION naves aleatorias no coincidan en las mismas casillas
-
     this.checkFreeCell = function (pos, row, col, longShip) {
         let test = true
         if (pos === 'h') {
@@ -235,6 +232,7 @@ function BoardGame(id) {
         
     }
 
+    //FUNCION para la condicion de victoria y derrota
     this.gameOver = function(loser ){
         if(loser === 'gameboard-player'){
             document.getElementById('dialogbox-ia').innerHTML = 'IA WINS'
