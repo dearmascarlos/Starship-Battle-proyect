@@ -44,7 +44,6 @@ function BoardGame(id) {
             for (var i = 0; i < enemy.fleet[ship].cells.length; i++) {
                 if(col === enemy.fleet[ship].cells[i].col && row === enemy.fleet[ship].cells[i].row) {
                     enemy.fleet[ship].hit++
-                    console.log(enemy.fleet)
                 } 
             }
             
@@ -72,8 +71,8 @@ function BoardGame(id) {
 
     // CREA coordenadas aleatorias y que no se repitan para IA
     this.createRandomCoor = function() {
-        randomRow =  Math.floor(Math.random() * 10)   //Genero núm aleatorio [0, 9]
-        randomCol =  Math.floor(Math.random() * 10)   //Genero núm aleatorio [0, 9]
+        let randomRow =  Math.floor(Math.random() * 10)   
+        let randomCol =  Math.floor(Math.random() * 10)  
         let coor = {
             row: randomRow,
             col: randomCol
@@ -122,8 +121,8 @@ function BoardGame(id) {
         
         for (var i = 0; i < longShip; i++) { 
             if (i === 0) {
-                randomRow =  Math.floor(Math.random() * 10 )   //Genero núm aleatorio [0, 9]
-                randomCol =  Math.floor(Math.random() * (11 - longShip))   //Genero núm aleatorio [0, 9]
+                randomRow =  Math.floor(Math.random() * 10 )   
+                randomCol =  Math.floor(Math.random() * (11 - longShip))   
                 self.fleet['ship' + longShip] = {}
                 self.fleet['ship' + longShip].cells = []
                 self.fleet['ship' + longShip].position = 'h'
@@ -157,8 +156,8 @@ function BoardGame(id) {
         let randomCol = 0
         for (var i = 0; i < longShip; i++) { 
                 if (i === 0) {
-                    randomRow =  Math.floor(Math.random() * (11 - longShip))   //Genero núm aleatorio [0, 9]
-                    randomCol =  Math.floor(Math.random() * 10 )   //Genero núm aleatorio [0, 9]
+                    randomRow =  Math.floor(Math.random() * (11 - longShip))   
+                    randomCol =  Math.floor(Math.random() * 10 )   
                     self.fleet['ship' + longShip] = {}
                     self.fleet['ship' + longShip].cells = []
                     self.fleet['ship' + longShip].position = 'v'
@@ -245,14 +244,3 @@ function BoardGame(id) {
     }
 
 }
-
-
-
-
-
-
-    
-
-
-
-
