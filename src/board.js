@@ -63,7 +63,7 @@ function BoardGame(id) {
             enemy.destroyed++
                     if(enemy.destroyed === 4) {
                         gamer.continue = false
-                    gamer.gameOver(enemy.id)
+                        gamer.gameOver(enemy.id)
                     } 
             }
         }
@@ -105,8 +105,8 @@ function BoardGame(id) {
         
                    //buscar el barco donde está la casilla y aumentar en hit SIEMPRE QUE NO ESTUVIERA YA EN HIT, QUE SEA NUEVA, NO REPETIDA
 
-                    self.checkPlace(self, self, row, col)
-                    
+                    self.checkPlace(self, this, row, col)
+                        
                 } else if(testHit !== 'h' && testHit !== 'd') {
                     select.classList.add('vacuum')
                     document.getElementById('dialogbox-player').innerHTML = 'VACUUM'
